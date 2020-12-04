@@ -22,7 +22,7 @@ const lib = (() => {
   *************************************************************/
 
   const CREDENTIALS = getConfigs;
-  const BASE_URI = 'https://storage.googleapis.com/storage/v1';
+  const BASE_URL = 'https://storage.googleapis.com/storage/v1';
 
   // attempt service OAuth authorization
   const _service = (() => {
@@ -126,7 +126,7 @@ const lib = (() => {
   const createBucket = (name, payload = {}, params = {}) => {
     // for list of params: https://cloud.google.com/storage/docs/json_api/v1/buckets/insert
     params = { ...params, project: CREDENTIALS.PROJECT_ID, alt: 'json' }
-    const URI = BASE_URI + '/b' + Utils.buildQueryParams(params);
+    const URI = BASE_URL + '/b' + Utils.buildQueryParams(params);
     const headers = _headers('json');
     const options = {
       headers,
@@ -145,21 +145,21 @@ const lib = (() => {
 
   const getBucket = (name, params = {}) => {
     // for list of params: https://cloud.google.com/storage/docs/json_api/v1/buckets/get
-    const URI = BASE_URI + '/b/' + name + Utils.buildQueryParams(params);
+    const URI = BASE_URL + '/b/' + name + Utils.buildQueryParams(params);
     return _request(URI, 'GET');
   };
 
   const listBuckets = (params = {}) => {
     // for list of params: https://cloud.google.com/storage/docs/json_api/v1/buckets/list
     params = { ...params, project: CREDENTIALS.PROJECT_ID };
-    const URI = BASE_URI + '/b' + Utils.buildQueryParams(params);
+    const URI = BASE_URL + '/b' + Utils.buildQueryParams(params);
     return _request(URI, 'GET');
   };
 
   // TODO: separate PATCH from PUT update
   const updateBucket = (name, payload = {}, params = {}) => {
     // for list of params: https://cloud.google.com/storage/docs/json_api/v1/buckets/patch
-    const URI = BASE_URI + '/b/' + encodeURIComponent(name) + Utils.buildQueryParams(params);
+    const URI = BASE_URL + '/b/' + encodeURIComponent(name) + Utils.buildQueryParams(params);
     const headers = _headers('json');
     const options = { headers };
 
@@ -169,7 +169,7 @@ const lib = (() => {
   };
 
   const deleteBucket = (name) => {
-    const URI = BASE_URI + '/b/' + encodeURIComponent(name);
+    const URI = BASE_URL + '/b/' + encodeURIComponent(name);
     return _request(URI, 'DELETE');
   };
 
@@ -194,20 +194,20 @@ const lib = (() => {
   const getObject = (name, bucket, params = {}, getMedia = false) => {
     // for list of params: https://cloud.google.com/storage/docs/json_api/v1/objects/get
     params = { ...params, alt: (getMedia ? 'media' : 'json') }
-    const URI = BASE_URI + '/b/' + encodeURIComponent(bucket) + '/o/' + encodeURIComponent(name) + Utils.buildQueryParams(params);
+    const URI = BASE_URL + '/b/' + encodeURIComponent(bucket) + '/o/' + encodeURIComponent(name) + Utils.buildQueryParams(params);
     return _request(URI, 'GET');
   };
 
   const listObjects = (bucket, params = {}) => {
     // for list of params: https://cloud.google.com/storage/docs/json_api/v1/objects/list
-    const URI = BASE_URI + '/b/' + encodeURIComponent(bucket) + '/o' + Utils.buildQueryParams(params);
+    const URI = BASE_URL + '/b/' + encodeURIComponent(bucket) + '/o' + Utils.buildQueryParams(params);
     return _request(URI, 'GET');
   };
 
   // TODO: separate PATCH from PUT update
   const updateObject = (name, bucket, payload = {}, params = {}) => {
     // for list of params: https://cloud.google.com/storage/docs/json_api/v1/objects/patch
-    const URI = BASE_URI + '/b/' + encodeURIComponent(bucket) + '/o/' + encodeURIComponent(name) + Utils.buildQueryParams(params);
+    const URI = BASE_URL + '/b/' + encodeURIComponent(bucket) + '/o/' + encodeURIComponent(name) + Utils.buildQueryParams(params);
     const headers = _headers('json');
     const options = { headers };
 
@@ -217,7 +217,7 @@ const lib = (() => {
   };
 
   const deleteObject = (name, bucket) => {
-    const URI = BASE_URI + '/b/' + encodeURIComponent(bucket) + '/o/' + encodeURIComponent(name);
+    const URI = BASE_URL + '/b/' + encodeURIComponent(bucket) + '/o/' + encodeURIComponent(name);
     return _request(URI, 'DELETE');
   };
 
